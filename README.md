@@ -1,5 +1,14 @@
 # README.md
 
+# First run on a new machine
+0. Install [WinGet](https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-US&gl=SK)
+0. run: `winget install -e --id Git.Git`
+0. cd ~
+0. git clone https://github.com/jan-revay/initPC.git
+0. cd initPC/
+0. git checkout <branch> (optional step)
+0. `Set-ExecutionPolicy unrestricted && cd Windows_10 && .\run_all.ps1` - (with administrator privileges)
+
 ## Examples & similar tools to take ideas from
 
 - <https://github.com/ChrisTitusTech/winutil>
