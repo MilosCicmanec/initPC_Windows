@@ -45,9 +45,6 @@ $WINGET_PACKAGES = @(
     'CPUID.CPU-Z'
     'CPUID.HWMonitor'
 
-# Drivers and HW support
-    'Logitech.OptionsPlus'
-
 # Runtimes
     'Microsoft.DotNet.DesktopRuntime.6' # for GitExtensions
     'Microsoft.DotNet.DesktopRuntime.7'
@@ -71,19 +68,13 @@ $WINGET_PACKAGES = @(
     'fzf'
     'AlDanial.Cloc' # count number of lines of code
     'starship.starship'
-    'pCloudAG.pCloudDrive'
     'Anki.Anki'
     'Hex-Rays.IDA.Free'
-    'Qalculate'
-    'Joplin'
-    'Geany.Geany'
     'PuTTY.PuTTY'
     'DBBrowserForSQLite.DBBrowserForSQLite'
     'voidtools.Everything'
     'Oracle.VirtualBox'
     'Google.EarthPro'
-    'CodeSector.TeraCopy'
-    'Gyan.FFmpeg'
     'NirSoft.OpenedFilesView'
     'NirSoft.InsideClipboard'
     'Google.GoogleDrive'
@@ -91,7 +82,6 @@ $WINGET_PACKAGES = @(
     'dotPDN.PaintDotNet'
     'Inkscape.Inkscape'
     'Audacity.Audacity'
-    'KDE.Kdenlive'
     'Microsoft.Sysinternals.Autoruns'
     'Rufus.Rufus'
 
@@ -113,7 +103,6 @@ $WINGET_PACKAGES = @(
 # Code editors
     'Microsoft.VisualStudioCode'
     'Neovim.Neovim'
-    'Helix.Helix'
     'Notepad++.Notepad++'
     'WerWolv.ImHex'
     'RKibria.frhed'
@@ -140,19 +129,11 @@ $WINGET_PACKAGES = @(
 
 # Office work & document readers & books
     'Adobe.Acrobat.Reader.64-bit'
-    'TrackerSoftware.PDF-XChangeEditor'
-    'SumatraPDF.SumatraPDF'
     'KDE.Okular'
     'TheDocumentFoundation.LibreOffice'
-    'Amazon.Kindle'
-    'Grammarly.Grammarly'
     'calibre.calibre'
 
 # Messaging and videoconferencing apps
-    'Zoom.Zoom'  # broken TODO FIX?
-    '9NKSQGP7F2NH' # WhatsApp, the winget package is broken
-    'OpenWhisperSystems.Signal'
-    'Facebook.Messenger' # broken? TODO FIX? TODO maybe replace with Chrome PWA
     'Discord.Discord'
 
 # Multimedia
@@ -163,7 +144,6 @@ $WINGET_PACKAGES = @(
     'VideoLAN.VLC'
 
 # Productivity
-    'Doist.Todoist'
 )
 
 $WINGET_PACKAGES | ForEach-Object {
@@ -218,33 +198,5 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 
 ## INSTALL RAW .EXE PACKAGES
 
-# TODO solve updates, automatic config import (probably in C:\Program Files\Pentablet\config, diff the file
-# with my saved config), maybe just check for the updates manually or find a link that always has the latest version
-if (-not (Test-Path "C:\Program Files\Pentablet")) {
-    $downloadUrl = "https://www.xp-pen.com/download/file.html?id=2866&pid=51&ext=zip"
-    $zipPath = "$env:TEMP\xppen_driver.zip"
-    $extractPath = "$env:TEMP\xppen_driver"
-    
-    # Create the extract path if it doesn't exist
-    if (-Not (Test-Path -Path $extractPath)) {
-        New-Item -ItemType Directory -Path $extractPath | Out-Null
-    }
-    
-    # Download the ZIP file
-    Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath
-
-    # Unzip the file
-    Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
-    
-    # Find the .exe installer (assumes there's only one .exe inside the ZIP)
-    $exeFile = Get-ChildItem -Path $extractPath -Filter *.exe -Recurse | Select-Object -First 1
-    
-    # Check if the EXE was found
-    if ($exeFile) {
-        Start-Process -FilePath $exeFile.FullName -ArgumentList '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-' -Wait
-    } else {
-        Write-Host "No executable installer found in the extracted files."
-    }
-}
 
 Set-PSDebug -Trace 0
